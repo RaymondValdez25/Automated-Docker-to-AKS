@@ -13,4 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build -t raymondvaldez/quoterepo .
+      run: | 
+        docker build -t raymondvaldez/quoterepo .
+        docker run -d -p 8080:8080 raymondvaldez/quoterepo
