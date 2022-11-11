@@ -13,6 +13,6 @@ EXPOSE 8000
 
 # Show current folder structure in logs
 RUN ls -al -R
-RUN npm install pm2 -g
+RUN npm install pm2 -g 
 
 CMD ["pm2-runtime", "ServerSide/server.js"]
