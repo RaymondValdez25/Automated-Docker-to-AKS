@@ -13,5 +13,8 @@ jobs:
     - name: Build the Docker image
       run: docker build -t raymondvaldez/quoterepo .
     
-    - name: runTheContainer
-      run: docker run -d -p 8080:8080 raymondvaldez/quoterepo
+    #- name: runTheContainer
+    #  run: docker run -d -p 8080:8080 raymondvaldez/quoterepo
+
+    - name: showCurrentContext
+      run: docker context show
