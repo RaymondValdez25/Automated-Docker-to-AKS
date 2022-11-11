@@ -5,9 +5,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -15,5 +13,5 @@ jobs:
     - name: Build the Docker image
       run: docker build -t raymondvaldez/quoterepo .
     
-    - name:
+    - name: runTheContainer
       run: docker run -d -p 8080:8080 raymondvaldez/quoterepo
