@@ -16,5 +16,9 @@ jobs:
     #- name: runTheContainer
     #  run: docker run -d -p 8080:8080 raymondvaldez/quoterepo
 
-    - name: showCurrentContext
-      run: docker context show
+    #not working
+    #- name: showCurrentContext
+    #  run: docker context show
+
+    - name: list crunning containers
+      run: docker ps
