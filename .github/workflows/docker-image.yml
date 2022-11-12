@@ -13,6 +13,9 @@ jobs:
     - name: Build the Docker image
       run: docker build -t raymondvaldez/quoterepo .
     
+    - name: pushToRepo
+      run: docker push raymondvaldez/quoterepo
+
     - name: runTheContainer
       run: docker run -d -p 3000:3000 raymondvaldez/quoterepo
 
