@@ -13,12 +13,12 @@ jobs:
     - name: Build the Docker image
       run: docker build -t raymondvaldez/quoterepo .
     
-    #- name: runTheContainer
-    #  run: docker run -d -p 8080:8080 raymondvaldez/quoterepo
+    - name: runTheContainer
+      run: docker run -d -p 3000:3000 raymondvaldez/quoterepo
 
     #not working
     #- name: showCurrentContext
     #  run: docker context show
 
-    - name: list crunning containers
-      run: docker ps
+    #- name: list crunning containers
+    #  run: docker ps
