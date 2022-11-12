@@ -24,8 +24,7 @@ jobs:
         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/quoterepo:latest
 
     - name: runTheContainer
-      #run: docker run -d -p 3000:3000 raymondvaldez/quoterepo
-      run: docker run -p 3000:3000 raymondvaldez/quoterepo
+      run: docker run -d -p 3000:3000 raymondvaldez/quoterepo
 
     #not working
     #- name: showCurrentContext
