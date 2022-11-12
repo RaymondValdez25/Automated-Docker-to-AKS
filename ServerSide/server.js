@@ -20,7 +20,7 @@ const port = 3000;
 // to handle GET messages for each set of paths
 app.get('/', (req, res) => res.send(getResponseHTML(null)));
 app.get('/search', (req, res) => res.send(getResponseHTML(req.query.search_string)) );
-
+ 
 app.listen(port, () => console.log(`quote server app listening at http://localhost:${port}`));
 
 // Function to process an input message and emit the response
