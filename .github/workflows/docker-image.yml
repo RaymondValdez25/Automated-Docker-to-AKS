@@ -37,7 +37,7 @@ jobs:
       #- name : Build Dockerfile
       #  run: docker build -t quoteserveracr.azurecr.io/quoterepo:v3 .
       
-      - name: run docker compose
+      - name: run docker compose #builds the image from docker-compose
         run: docker-compose up --build -d
 
       - name : Tag Dockerfile
@@ -52,8 +52,13 @@ jobs:
       - name: list container images in registries after push
         run : docker images
 
-      #- name: pull new container
-      #  run:  docker pull quoteserveracr.azurecr.io/quoterepo:v1
+      - name: pull new container
+        run:  docker pull quoteserveracr.azurecr.io/quoterepo:v2
+
+
+      - name: list container images in registries after pull
+        run : docker images
+
 
       - name: Set AKS context
         id: set-context
