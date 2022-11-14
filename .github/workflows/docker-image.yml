@@ -35,13 +35,19 @@ jobs:
         run : az acr login --name ${{ secrets.registry }}
 
       - name : Build Dockerfile
-        run: docker build -t raymondvaldez/quoterepo:v1 .
+        run: docker build -t raymondvaldez/quoterepo .
+      
+      - name : Tag Dockerfile
+        run: docker tag raymondvaldez/quoterepo ${{ secrets.registry }}.azurecr.io/quoterepo:v1
 
-      - name: list container iamges in registries
+      - name: list container images in registries before push
         run : docker images
 
       - name : Push to ACR
-        run : docker push ${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:v1
+        run : docker push ${{ secrets.registry }}.azurecr.io/quoterepo:v1
+
+      - name: list container images in registries after push
+        run : docker images
 
 
      # - name: Set AKS context
