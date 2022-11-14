@@ -44,7 +44,7 @@ jobs:
         run : docker images
 
       - name : Push to ACR
-        run : docker push ${{ secrets.registry }}.azurecr.io/quoterepo:v1
+        run : docker push quoteserveracr.azurecr.io/quoterepo:v1
 
       - name: list container images in registries after push
         run : docker images
@@ -69,5 +69,6 @@ jobs:
           manifests: |
              manifest-file1.yaml
           #images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:${{ github.sha }}'
-          images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:v1'
+          #images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:v1'
+          images: quoteserveracr.azurecr.io/quoterepo:v1
           pull: false
