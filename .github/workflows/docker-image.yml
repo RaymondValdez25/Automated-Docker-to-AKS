@@ -9,17 +9,19 @@ jobs:
     steps:
       - name: Checkout source code 
         uses: actions/checkout@v3
-      - name: ACR build
-        id: build-push-acr
-        uses: azure/acr-build@v1
-        with:
-          service_principal: ${{ secrets.service_principal }}
-          service_principal_password: ${{ secrets.service_principal_password }}
-          tenant: ${{ secrets.tenant }}
-          registry: ${{ secrets.registry }}
-          repository: ${{ secrets.repository }}
-          image:  quoterepo
-          tag: v1
+        run: ls
+
+      #- name: ACR build
+      #  id: build-push-acr
+      #  uses: azure/acr-build@v1
+      #  with:
+      #    service_principal: ${{ secrets.service_principal }}
+      #    service_principal_password: ${{ secrets.service_principal_password }}
+      #    tenant: ${{ secrets.tenant }}
+      #    registry: ${{ secrets.registry }}
+      #    repository: ${{ secrets.repository }}
+      #    image:  quoterepo
+      #    tag: v1
       - name: Azure login
         id: login
         uses: azure/login@v1.4.3
@@ -41,5 +43,6 @@ jobs:
           namespace: 'default'
           manifests: |
              manifest-file1.yaml
-          images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:${{ github.sha }}'
+          #images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:${{ github.sha }}'
+          images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:v1'
           pull: false
