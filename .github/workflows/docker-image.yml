@@ -35,10 +35,10 @@ jobs:
         run : az acr login --name ${{ secrets.registry }}
 
       - name : Build Dockerfile
-        run: docker build -t raymondvaldez/quoterepo .
+        run: docker build -t quoteserveracr.azurecr.io/quoterepo:v1 .
       
-      - name : Tag Dockerfile
-        run: docker tag raymondvaldez/quoterepo ${{ secrets.registry }}.azurecr.io/quoterepo:v1
+      #- name : Tag Dockerfile
+      #  run: docker tag raymondvaldez/quoterepo ${{ secrets.registry }}.azurecr.io/quoterepo:v1
 
       - name: list container images in registries before push
         run : docker images

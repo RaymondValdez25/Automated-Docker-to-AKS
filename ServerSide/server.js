@@ -46,12 +46,12 @@ function getResponseHTML(sString){
     <html>
         <head>
             <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-            <title>Quote edit Server Page</title>
+            <title>Quote Server Page</title>
         </head>
         <body>
             <h2>Quote Server</h2>
             <form action="/search">
-                <label for="search_string">Search string:</label><br>
+                <label for="search_string">Search helloWorld123 string:</label><br>
                 <input type="text" id="search_string" name="search_string"><br> <br>
                 <input type="submit" value="Submit Search">
             </form>
