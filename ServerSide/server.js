@@ -46,7 +46,7 @@ function getResponseHTML(sString){
     <html>
         <head>
             <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-            <title>Quote Server Page</title>
+            <title>Quote edit Server Page</title>
         </head>
         <body>
             <h2>Quote Server</h2>

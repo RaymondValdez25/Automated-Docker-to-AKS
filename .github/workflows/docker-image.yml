@@ -50,24 +50,24 @@ jobs:
         run : docker images
 
 
-     # - name: Set AKS context
-     #   id: set-context
-     #   uses: azure/aks-set-context@v3
-     #   with:
-     #     resource-group: '${{ secrets.resource_group }}' 
-     #     cluster-name: '${{ secrets.cluster_name }}'
+      - name: Set AKS context
+        id: set-context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: '${{ secrets.resource_group }}' 
+          cluster-name: '${{ secrets.cluster_name }}'
 
-     # - name: Setup kubectl
-     #   id: install-kubectl
-     #   uses: azure/setup-kubectl@v3
+      - name: Setup kubectl
+        id: install-kubectl
+        uses: azure/setup-kubectl@v3
 
-     # - name: Deploy to AKS
-     #   id: deploy-aks
-     #   uses: Azure/k8s-deploy@v4
-     #   with:
-     #     namespace: 'default'
-     #     manifests: |
-     #        manifest-file1.yaml
-     #     #images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:${{ github.sha }}'
-     #     images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:v1'
-     #     pull: false
+      - name: Deploy to AKS
+        id: deploy-aks
+        uses: Azure/k8s-deploy@v4
+        with:
+          namespace: 'default'
+          manifests: |
+             manifest-file1.yaml
+          #images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:${{ github.sha }}'
+          images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:v1'
+          pull: false
