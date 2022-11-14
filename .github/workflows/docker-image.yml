@@ -34,8 +34,8 @@ jobs:
       - name : login to acr
         run : az acr login --name ${{ secrets.registry }}
 
-      #- name : Build Dockerfile
-      #  run: docker build -t quoteserveracr.azurecr.io/quoterepo:v3 .
+      - name : Build Dockerfile
+        run: docker build -t quoteserveracr.azurecr.io/quoterepo:v1 .
       
       - name: run docker compose #builds the image from docker-compose
         run: docker-compose up --build -d
