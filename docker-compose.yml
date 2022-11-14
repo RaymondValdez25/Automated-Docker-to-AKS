@@ -1,0 +1,9 @@
+version: '3.9'
+services:
+  quoteServer-service:
+    image: quoteserveracr.azurecr.io/quoterepo:v1
+    container_name: quoteServer-service
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+        - "3000:3000"
