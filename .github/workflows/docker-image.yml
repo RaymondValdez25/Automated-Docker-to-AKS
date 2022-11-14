@@ -24,6 +24,13 @@ jobs:
       #    image:  quoterepo
       #    tag: v1
 
+
+      - name: Azure login
+        id: login
+        uses: azure/login@v1.4.3
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name : login to acr
         run : az acr login --name ${{ secrets.registry }}
 
@@ -36,11 +43,6 @@ jobs:
       - name : Push to ACR
         run : docker push ${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:v1
 
-      - name: Azure login
-        id: login
-        uses: azure/login@v1.4.3
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
      # - name: Set AKS context
      #   id: set-context
