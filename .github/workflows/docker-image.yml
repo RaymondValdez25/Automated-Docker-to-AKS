@@ -9,6 +9,7 @@ jobs:
     steps:
       - name: Checkout source code 
         uses: actions/checkout@v3
+      - name: get folders
         run: ls
 
       #- name: ACR build
