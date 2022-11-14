@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: quoterepo
-        image: quoteserveracr.azurecr.io/quoterepo:v1
+        image: quoteserveracr.azurecr.io/quoterepo:v2
         ports:
         - containerPort: 3000
         resources:

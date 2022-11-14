@@ -34,23 +34,26 @@ jobs:
       - name : login to acr
         run : az acr login --name ${{ secrets.registry }}
 
-      - name : Build Dockerfile
-        run: docker build -t quoteserveracr.azurecr.io/quoterepo:v1 .
+      #- name : Build Dockerfile
+      #  run: docker build -t quoteserveracr.azurecr.io/quoterepo:v3 .
       
-      #- name : Tag Dockerfile
-      #  run: docker tag raymondvaldez/quoterepo ${{ secrets.registry }}.azurecr.io/quoterepo:v1
+      - name: run docker compose
+        run: docker-compose up --build -d
+
+      - name : Tag Dockerfile
+        run: docker tag quoteserveracr.azurecr.io/quoterepo:v1 quoteserveracr.azurecr.io/quoterepo:v2
 
       - name: list container images in registries before push
         run : docker images
 
       - name : Push to ACR
-        run : docker push quoteserveracr.azurecr.io/quoterepo:v1
+        run : docker push quoteserveracr.azurecr.io/quoterepo:v2
 
       - name: list container images in registries after push
         run : docker images
 
-      - name: pull new container
-        run:  docker pull quoteserveracr.azurecr.io/quoterepo:v1
+      #- name: pull new container
+      #  run:  docker pull quoteserveracr.azurecr.io/quoterepo:v1
 
       - name: Set AKS context
         id: set-context
@@ -72,5 +75,6 @@ jobs:
              manifest-file1.yaml
           #images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:${{ github.sha }}'
           #images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:v1'
-          images: quoteserveracr.azurecr.io/quoterepo:v1
+          images: quoteserveracr.azurecr.io/quoterepo:v2
           pull: false
+
