@@ -49,6 +49,8 @@ jobs:
       - name: list container images in registries after push
         run : docker images
 
+      - name: pull new container
+        run:  docker pull quoteserveracr.azurecr.io/quoterepo:v1
 
       - name: Set AKS context
         id: set-context
