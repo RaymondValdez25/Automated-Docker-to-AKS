@@ -17,4 +17,4 @@ RUN ls -al -R
 RUN ls
 RUN npm install pm2 -g 
 
-CMD ["pm2-runtime", "ServerSide/server.js"]
+CMD ["pm2-runtime", "ServerSide/server.js"] 
