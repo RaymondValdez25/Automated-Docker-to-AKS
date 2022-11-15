@@ -9,21 +9,6 @@ jobs:
     steps:
       - name: Checkout source code 
         uses: actions/checkout@v3
-      - name: get folders
-        run: ls
-
-      #- name: ACR build
-      #  id: build-push-acr
-      #  uses: azure/acr-build@v1
-      #  with:
-      #    service_principal: ${{ secrets.service_principal }}
-      #    service_principal_password: ${{ secrets.service_principal_password }}
-      #    tenant: ${{ secrets.tenant }}
-      #    registry: ${{ secrets.registry }}
-      #    repository:
-      #    image:  quoterepo
-      #    tag: v2
-
 
       - name: Azure login
         id: login
@@ -31,46 +16,14 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name : login to acr
+      - name : Login to ACR
         run : az acr login --name ${{ secrets.registry }}
 
-      #find a docker delete option to delete the image from the local registry
-      - name: list container images in registries before running build
-        run : docker images
-
       - name : Build Dockerfile
-        #run: docker build --no-cache -t quoteserveracr.azurecr.io/quoterepo:v1 .
-        #run: docker build . --no-cache -t quoteserveracr.azurecr.io/quoterepo:v1
         run: docker build . --no-cache -t quoteserveracr.azurecr.io/quoterepo:${{ github.sha }}
 
-      #- name: run docker compose #builds the image from docker-compose
-      #  run: docker-compose up --build -d
-
-      - name: list container images in registries before tagging
-        run : docker images
-
-      #- name : Tag Dockerfile
-      #  run: docker tag quoteserveracr.azurecr.io/quoterepo:v1 quoteserveracr.azurecr.io/quoterepo:v2
-
-      - name: list container images in registries before push
-        run : docker images
-
       - name : Push to ACR
-        #run : docker push quoteserveracr.azurecr.io/quoterepo:v2
-        #run : docker push quoteserveracr.azurecr.io/quoterepo:v1
         run : docker push quoteserveracr.azurecr.io/quoterepo:${{ github.sha }}
-
-      - name: list container images in registries after push
-        run : docker images
-
-      #- name: pull new container
-        #run:  docker pull quoteserveracr.azurecr.io/quoterepo:v2
-        #run:  docker pull quoteserveracr.azurecr.io/quoterepo:v1
-        #run:  docker pull quoteserveracr.azurecr.io/quoterepo:v3
-
-      - name: list container images in registries after pull
-        run : docker images
-
 
       - name: Set AKS context
         id: set-context
@@ -83,7 +36,6 @@ jobs:
         id: install-kubectl
         uses: azure/setup-kubectl@v3
 
-        #try running this local
       - name: Deploy to AKS
         id: deploy-aks
         uses: Azure/k8s-deploy@v4
@@ -91,11 +43,6 @@ jobs:
           namespace: 'default'
           manifests: |
              manifest-file1.yaml
-          #images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:${{ github.sha }}'
-          #images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:v1'
-          #images: quoteserveracr.azurecr.io/quoterepo:v2
-          #images: quoteserveracr.azurecr.io/quoterepo:v1
-          #images: quoteserveracr.azurecr.io/quoterepo:v3
           images: '${{ secrets.registry }}.azurecr.io/quoterepo:${{ github.sha }}'
           pull: false
 
