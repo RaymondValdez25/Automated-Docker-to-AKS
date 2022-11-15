@@ -39,29 +39,31 @@ jobs:
         run : docker images
 
       - name : Build Dockerfile
-        run: docker build --no-cache -t quoteserveracr.azurecr.io/quoterepo:v1 .
-      
+        #run: docker build --no-cache -t quoteserveracr.azurecr.io/quoterepo:v1 .
+        run: docker build . --no-cache -t quoteserveracr.azurecr.io/quoterepo:v1
+
       #- name: run docker compose #builds the image from docker-compose
       #  run: docker-compose up --build -d
 
       - name: list container images in registries before tagging
         run : docker images
 
-      - name : Tag Dockerfile
-        run: docker tag quoteserveracr.azurecr.io/quoterepo:v1 quoteserveracr.azurecr.io/quoterepo:v2
+      #- name : Tag Dockerfile
+      #  run: docker tag quoteserveracr.azurecr.io/quoterepo:v1 quoteserveracr.azurecr.io/quoterepo:v2
 
       - name: list container images in registries before push
         run : docker images
 
       - name : Push to ACR
-        run : docker push quoteserveracr.azurecr.io/quoterepo:v2
+        #run : docker push quoteserveracr.azurecr.io/quoterepo:v2
+        run : docker push quoteserveracr.azurecr.io/quoterepo:v1
 
       - name: list container images in registries after push
         run : docker images
 
       - name: pull new container
-        run:  docker pull quoteserveracr.azurecr.io/quoterepo:v2
-
+        #run:  docker pull quoteserveracr.azurecr.io/quoterepo:v2
+        run:  docker pull quoteserveracr.azurecr.io/quoterepo:v1
 
       - name: list container images in registries after pull
         run : docker images
@@ -87,6 +89,7 @@ jobs:
              manifest-file1.yaml
           #images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:${{ github.sha }}'
           #images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:v1'
-          images: quoteserveracr.azurecr.io/quoterepo:v2
+          #images: quoteserveracr.azurecr.io/quoterepo:v2
+          images: quoteserveracr.azurecr.io/quoterepo:v1
           pull: false
 
