@@ -34,6 +34,10 @@ jobs:
       - name : login to acr
         run : az acr login --name ${{ secrets.registry }}
 
+      #find a docker delete option to delete the image from the local registry
+      - name: list container images in registries before running build
+        run : docker images
+
       - name : Build Dockerfile
         run: docker build --no-cache -t quoteserveracr.azurecr.io/quoterepo:v1 .
       
