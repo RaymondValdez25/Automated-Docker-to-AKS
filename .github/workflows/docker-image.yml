@@ -41,7 +41,7 @@ jobs:
       - name : Build Dockerfile
         #run: docker build --no-cache -t quoteserveracr.azurecr.io/quoterepo:v1 .
         #run: docker build . --no-cache -t quoteserveracr.azurecr.io/quoterepo:v1
-        run: docker build . --no-cache -t quoteserveracr.azurecr.io/quoterepo:v3
+        run: docker build . --no-cache -t quoteserveracr.azurecr.io/quoterepo:${{ github.sha }}
 
       #- name: run docker compose #builds the image from docker-compose
       #  run: docker-compose up --build -d
@@ -58,7 +58,7 @@ jobs:
       - name : Push to ACR
         #run : docker push quoteserveracr.azurecr.io/quoterepo:v2
         #run : docker push quoteserveracr.azurecr.io/quoterepo:v1
-        run : docker push quoteserveracr.azurecr.io/quoterepo:v3
+        run : docker push quoteserveracr.azurecr.io/quoterepo:${{ github.sha }}
 
       - name: list container images in registries after push
         run : docker images
@@ -95,6 +95,7 @@ jobs:
           #images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:v1'
           #images: quoteserveracr.azurecr.io/quoterepo:v2
           #images: quoteserveracr.azurecr.io/quoterepo:v1
-          images: quoteserveracr.azurecr.io/quoterepo:v3
+          #images: quoteserveracr.azurecr.io/quoterepo:v3
+          images: '${{ secrets.registry }}.azurecr.io/quoterepo:${{ github.sha }}'
           pull: false
 

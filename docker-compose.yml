@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   quoteServer-service:
-    image: quoteserveracr.azurecr.io/quoterepo:v1
+    image: quoteserveracr.azurecr.io/quoterepo:${{ github.sha }}
     container_name: quoteServer-service
     environment:
       ALLOW_EMPTY_PASSWORD: "yes"
