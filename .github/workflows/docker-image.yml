@@ -1,35 +1,48 @@
-name: Docker Image CI
-
+name: build_deploy_aks
 on: [push]
-
+  #push:
+    #paths:
+    #  - "azure-vote/**"
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
+      - name: Checkout source code 
+        uses: actions/checkout@v3
 
-    - name: Login to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-    
-    - name: Build and push
-      uses: docker/build-push-action@v3
-      with:
-        context: .
-        file: ./Dockerfile
-        push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/quoterepo:latest
+      - name: Azure login
+        id: login
+        uses: azure/login@v1.4.3
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    #Container isn't running
-    #- name: runTheContainer
-    #  run: docker run -d -p 3000:3000 raymondvaldez/quoterepo
+      - name : Login to ACR
+        run : az acr login --name ${{ secrets.registry }}
 
-    #not working
-    #- name: showCurrentContext
-    #  run: docker context show
+      - name : Build Dockerfile
+        run: docker build . --no-cache -t quoteserveracr.azurecr.io/quoterepo:${{ github.sha }}
 
-    #- name: list crunning containers
-    #  run: docker ps
+      - name : Push to ACR
+        run : docker push quoteserveracr.azurecr.io/quoterepo:${{ github.sha }}
+
+      - name: Set AKS context
+        id: set-context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: '${{ secrets.resource_group }}' 
+          cluster-name: '${{ secrets.cluster_name }}'
+
+      - name: Setup kubectl
+        id: install-kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Deploy to AKS
+        id: deploy-aks
+        uses: Azure/k8s-deploy@v4
+        with:
+          namespace: 'default'
+          manifests: |
+             manifest-file1.yaml
+          images: '${{ secrets.registry }}.azurecr.io/quoterepo:${{ github.sha }}'
+          pull: false
+
