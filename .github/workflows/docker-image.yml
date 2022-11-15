@@ -40,7 +40,8 @@ jobs:
 
       - name : Build Dockerfile
         #run: docker build --no-cache -t quoteserveracr.azurecr.io/quoterepo:v1 .
-        run: docker build . --no-cache -t quoteserveracr.azurecr.io/quoterepo:v1
+        #run: docker build . --no-cache -t quoteserveracr.azurecr.io/quoterepo:v1
+        run: docker build . --no-cache -t quoteserveracr.azurecr.io/quoterepo:v3
 
       #- name: run docker compose #builds the image from docker-compose
       #  run: docker-compose up --build -d
@@ -56,14 +57,16 @@ jobs:
 
       - name : Push to ACR
         #run : docker push quoteserveracr.azurecr.io/quoterepo:v2
-        run : docker push quoteserveracr.azurecr.io/quoterepo:v1
+        #run : docker push quoteserveracr.azurecr.io/quoterepo:v1
+        run : docker push quoteserveracr.azurecr.io/quoterepo:v3
 
       - name: list container images in registries after push
         run : docker images
 
-      - name: pull new container
+      #- name: pull new container
         #run:  docker pull quoteserveracr.azurecr.io/quoterepo:v2
-        run:  docker pull quoteserveracr.azurecr.io/quoterepo:v1
+        #run:  docker pull quoteserveracr.azurecr.io/quoterepo:v1
+        #run:  docker pull quoteserveracr.azurecr.io/quoterepo:v3
 
       - name: list container images in registries after pull
         run : docker images
@@ -80,6 +83,7 @@ jobs:
         id: install-kubectl
         uses: azure/setup-kubectl@v3
 
+        #try running this local
       - name: Deploy to AKS
         id: deploy-aks
         uses: Azure/k8s-deploy@v4
@@ -90,6 +94,7 @@ jobs:
           #images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:${{ github.sha }}'
           #images: '${{ secrets.registry }}.azurecr.io/${{ secrets.repository }}/quoterepo:v1'
           #images: quoteserveracr.azurecr.io/quoterepo:v2
-          images: quoteserveracr.azurecr.io/quoterepo:v1
+          #images: quoteserveracr.azurecr.io/quoterepo:v1
+          images: quoteserveracr.azurecr.io/quoterepo:v3
           pull: false
 
