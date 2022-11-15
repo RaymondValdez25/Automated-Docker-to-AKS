@@ -12,55 +12,55 @@ jobs:
       - name: get folders
         run: ls
 
-      - name: ACR build
-        id: build-push-acr
-        uses: azure/acr-build@v1
-        with:
-          service_principal: ${{ secrets.service_principal }}
-          service_principal_password: ${{ secrets.service_principal_password }}
-          tenant: ${{ secrets.tenant }}
-          registry: ${{ secrets.registry }}
-          repository:
-          image:  quoterepo
-          tag: v2
-
-
-      #- name: Azure login
-      #  id: login
-      #  uses: azure/login@v1.4.3
+      #- name: ACR build
+      #  id: build-push-acr
+      #  uses: azure/acr-build@v1
       #  with:
-      #    creds: ${{ secrets.AZURE_CREDENTIALS }}
+      #    service_principal: ${{ secrets.service_principal }}
+      #    service_principal_password: ${{ secrets.service_principal_password }}
+      #    tenant: ${{ secrets.tenant }}
+      #    registry: ${{ secrets.registry }}
+      #    repository:
+      #    image:  quoterepo
+      #    tag: v2
 
-      #- name : login to acr
-      #  run : az acr login --name ${{ secrets.registry }}
 
-      #- name : Build Dockerfile
-      #  run: docker build -t quoteserveracr.azurecr.io/quoterepo:v1 .
+      - name: Azure login
+        id: login
+        uses: azure/login@v1.4.3
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name : login to acr
+        run : az acr login --name ${{ secrets.registry }}
+
+      - name : Build Dockerfile
+        run: docker build -t quoteserveracr.azurecr.io/quoterepo:v1 .
       
-      #- name: run docker compose #builds the image from docker-compose
-      #  run: docker-compose up --build -d
+      - name: run docker compose #builds the image from docker-compose
+        run: docker-compose up --build -d
 
-      #- name: list container images in registries before tagging
-      #  run : docker images
+      - name: list container images in registries before tagging
+        run : docker images
 
-      #- name : Tag Dockerfile
-      #  run: docker tag quoteserveracr.azurecr.io/quoterepo:v1 quoteserveracr.azurecr.io/quoterepo:v2
+      - name : Tag Dockerfile
+        run: docker tag quoteserveracr.azurecr.io/quoterepo:v1 quoteserveracr.azurecr.io/quoterepo:v2
 
-      #- name: list container images in registries before push
-      #  run : docker images
+      - name: list container images in registries before push
+        run : docker images
 
-      #- name : Push to ACR
-      #  run : docker push quoteserveracr.azurecr.io/quoterepo:v2
+      - name : Push to ACR
+        run : docker push quoteserveracr.azurecr.io/quoterepo:v2
 
-      #- name: list container images in registries after push
-      #  run : docker images
+      - name: list container images in registries after push
+        run : docker images
 
-      #- name: pull new container
-      #  run:  docker pull quoteserveracr.azurecr.io/quoterepo:v2
+      - name: pull new container
+        run:  docker pull quoteserveracr.azurecr.io/quoterepo:v2
 
 
-      #- name: list container images in registries after pull
-      #  run : docker images
+      - name: list container images in registries after pull
+        run : docker images
 
 
       - name: Set AKS context
