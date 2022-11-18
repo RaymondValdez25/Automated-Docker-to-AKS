@@ -14,8 +14,6 @@ spec:
     spec:
       containers:
       - name: quoterepo
-        #image: quoteserveracr.azurecr.io/quoterepo:v2
-        #image: quoteserveracr.azurecr.io/quoterepo:v1
         image: quoteserveracr.azurecr.io/quoterepo:${{ github.sha }}
         ports:
         - containerPort: 3000
