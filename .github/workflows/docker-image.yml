@@ -24,10 +24,10 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name : Login to ACR
-        run : az acr login --name ${{ secrets.registry }}
+        run : az acr login --name quoteserveracr
 
       - name : Build Dockerfile
-        run: docker build . --no-cache -t quoteserveracr.azurecr.io/quoterepo:${{ github.sha }}
+        run: docker build . -t quoteserveracr.azurecr.io/quoterepo:${{ github.sha }}
 
       - name : Push to ACR
         run : docker push quoteserveracr.azurecr.io/quoterepo:${{ github.sha }}
@@ -47,6 +47,6 @@ jobs:
           namespace: 'default'
           manifests: |
              manifest-file1.yaml
-          images: '${{ secrets.registry }}.azurecr.io/quoterepo:${{ github.sha }}'
+          images: 'quoteserveracr.azurecr.io/quoterepo:${{ github.sha }}'
           pull: false
 
