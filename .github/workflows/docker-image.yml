@@ -32,6 +32,7 @@ jobs:
       - name : Push to ACR
         run : docker push quoteserveracr.azurecr.io/quoterepo:${{ github.sha }}
 
+      #Set the target AKS cluster context which will be used by other actions or run any kubectl commands.
       - name: Set AKS context
         id: set-context
         uses: azure/aks-set-context@v3
