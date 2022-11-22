@@ -33,16 +33,16 @@ jobs:
         run : docker push quoteserveracr.azurecr.io/quoterepo:${{ github.sha }}
 
       #Set the target AKS cluster context which will be used by other actions or run any kubectl commands.
-      - name: Set AKS context
-        id: set-context
-        uses: azure/aks-set-context@v3
-        with:
-          resource-group: '${{ secrets.resource_group }}' 
-          cluster-name: '${{ secrets.cluster_name }}'
+      #- name: Set AKS context
+      #  id: set-context
+      #  uses: azure/aks-set-context@v3
+      #  with:
+      #    resource-group: '${{ secrets.resource_group }}' 
+      #    cluster-name: '${{ secrets.cluster_name }}'
 
-      - name: Setup kubectl
-        id: install-kubectl
-        uses: azure/setup-kubectl@v3
+      #- name: Setup kubectl
+      #  id: install-kubectl
+      #  uses: azure/setup-kubectl@v3
 
       - name: Deploy to AKS
         id: deploy-aks
